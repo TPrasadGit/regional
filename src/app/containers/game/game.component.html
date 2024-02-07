@@ -1,0 +1,14 @@
+<div class="game-container">
+  <div class="game-container-guesses">
+    <app-guess-line></app-guess-line>
+    
+    
+
+ <app-keyboard type="qwerty"></app-keyboard>
+  <app-modal
+    *ngIf="gameState !== 'playing'"
+    (generateNewGame)="generateNewGame()"
+    [gameState]="gameState"
+    [word]="word"
+  ></app-modal>
+</div>

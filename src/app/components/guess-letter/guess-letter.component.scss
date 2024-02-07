@@ -1,0 +1,36 @@
+input {
+  width: 36px;
+    height: 36px;
+    color: #191816;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    border-color: azure;
+    border-radius: 5px;
+}
+.noChange{
+  border: medium solid #bec4d2;
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  background-color: #bec4d2!important;
+  border-radius: 5px;
+}
+.correctGuess{
+  border: medium solid #a5c0a1;
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  background-color:#4b8542!important;
+  border-radius: 5px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color:white;
+  line-height: 2;
+}
+.inputCity{
+  content: "";
+}

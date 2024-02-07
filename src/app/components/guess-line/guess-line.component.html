@@ -1,0 +1,16 @@
+<form id="myForm">
+<div *ngIf="!todaysPuzzle">
+  <h3 class="guess-line">No data available</h3>
+</div>
+<div *ngIf="todaysPuzzle">
+<div *ngFor="let x of todaysPuzzle;let i=index">
+  <div class="guess-line"><label style="font-weight: 700;">{{x.continent}}</label><br/><br/></div>
+  <div class="guess-line">
+ <app-guess-letter 
+  *ngFor="let letter of x.hint; let index = index"
+  [letter]="letter"
+    [index]="index" [continent]="x.continent"></app-guess-letter><!---->
+  </div>
+</div> 
+</div>
+</form>

@@ -1,0 +1,15 @@
+.guess-line {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+   // align-items: center;
+    justify-content: center;
+    gap: 5px;
+    //margin-top: 10px;
+}
+
+@media screen and (min-width: 600px) {
+    .guess-line {
+        gap: 10px;
+    }
+}
