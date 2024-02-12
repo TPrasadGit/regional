@@ -1,25 +1,26 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Guess } from 'src/utils/Guess';
-import {RegionalService, TodaysPuzzle } from '../../services/regional-service';
+import { PuzzleCity, RegionalService, TodaysPuzzle } from '../../services/regional-service';
+import { GameService } from 'src/app/services/game-service.service';
 @Component({
   selector: 'app-guess-line',
   templateUrl: './guess-line.component.html',
   styleUrls: ['./guess-line.component.scss'],
-  providers:[RegionalService]
+  providers: [RegionalService]
 })
 export class GuessLineComponent implements OnInit {
-  @Input()
-  guess: Guess;
-  todaysPuzzle:TodaysPuzzle;
+  @Input() guess: Guess;
+  todaysPuzzle: TodaysPuzzle;
+  _todaysPuzzle: TodaysPuzzle;
 
-  _regionalService:RegionalService;
-  constructor(private regionalService:RegionalService) {
-    this._regionalService=regionalService;
+  _regionalService: RegionalService;
+  constructor(private regionalService: RegionalService, private gameService: GameService) {
+    this._regionalService = regionalService;
   }
 
-ngOnInit(): void {
+  ngOnInit(): void {
     //this._regionalService.GetPuzzleOfTheDay().subscribe(val=>this.todaysPuzzle=val);  
-    this.todaysPuzzle=[
+    this.todaysPuzzle = [
       {
         "continent": "AMERICA",
         "city": "Newyork",
@@ -31,7 +32,8 @@ ngOnInit(): void {
           "",
           "",
           ""
-        ]
+        ],
+        "value": [''],
       },
       {
         "continent": "ASIA-PACIFIC",
@@ -44,7 +46,8 @@ ngOnInit(): void {
           "",
           "",
           ""
-        ]
+        ],
+        "value": [''],
       },
       {
         "continent": "EMEA",
@@ -56,13 +59,32 @@ ngOnInit(): void {
           "",
           "",
           ""
-        ]
+        ],
+        "value": [''],
       }
-    ]
- }  
-   @HostListener('document:keyup', ['$event'])
-   handleKeyboardEvent(event: KeyboardEvent, todaysPuzzle:TodaysPuzzle) {
-    this.regionalService.keyPressHandleRegional(event,this.todaysPuzzle);
+    ];
+
+    this.gameService.setFocussedContinent(this.todaysPuzzle[0]);
+
+    this.gameService.getCurrentPuzzleCity().subscribe(puzzleCity => {
+      this.todaysPuzzle.forEach((puzzle, index) => {
+        if (puzzleCity.continent === puzzle.continent) {
+          this.todaysPuzzle[index].value = puzzleCity.value;
+        }
+      });
+    });
   }
-  
+  // @HostListener('document:keyup', ['$event'])
+  //   handleKeyboardEvent(event: KeyboardEvent, todaysPuzzle:TodaysPuzzle) {
+  //   this.regionalService.keyPressHandleRegional(event,this.todaysPuzzle);
+  // }
+
+  setFocussedContinent(activeCity: PuzzleCity, event: Event) {
+    this.gameService.setFocussedContinent(activeCity);
+  }
+
+
+  onLetterFocus(focussedCity: PuzzleCity, event: Event) {
+    this.gameService.setFocussedContinent(focussedCity);
+  }
 }

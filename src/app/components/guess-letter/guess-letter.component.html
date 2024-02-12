@@ -1,3 +1,4 @@
-<input type="text" maxlength="1" id="{{continent+index}}"/><!--[appAutoTab]="continent + index"-->
+<input [disabled]="true" type="text" maxlength="1" id="{{continent+index}}" [value]="value" (focus)="onFocus()"/>
+<!--[appAutoTab]="continent + index"-->
  <br/>
 <label [ngClass]="letter==''?'noChange':'correctGuess'">{{letter}}</label>

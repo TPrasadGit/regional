@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { ENGLISH_WORDS } from 'src/utils/english-wordlist';
 import { Guess } from 'src/utils/Guess';
 import { isValidLetter } from 'src/utils/is-valid-letter';
+import { PuzzleCity, TodaysPuzzle } from './regional-service';
 //import { RegionalService } from './regional-service';
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,19 @@ export class GameService {
   wrongPosLettersSubject: Subject<string[]> = new BehaviorSubject<string[]>([]);
 
   wordSubject: Subject<string> = new BehaviorSubject<string>('');
+
+  todaysPuzzle: Subject<TodaysPuzzle> = new BehaviorSubject<TodaysPuzzle>([{
+    continent: '',
+    city: '',
+    hint: [''],
+    value: [''],
+  }]);
+  currentPuzzleCity: Subject<PuzzleCity> = new BehaviorSubject<PuzzleCity>({
+    continent: '',
+    city: '',
+    hint: [''],
+    value: [''],
+  });
  
   constructor() {
     this.generateNewGame();
@@ -70,6 +84,15 @@ export class GameService {
   getWord(): Observable<string> {
     return this.wordSubject.asObservable();
   }
+
+  getCurrentPuzzleCity(): Observable<PuzzleCity> {
+    return this.currentPuzzleCity.asObservable();
+  }
+
+  setCurrentPuzzleCity(puzzleCity: PuzzleCity) {
+    this.currentPuzzleCity.next(puzzleCity);
+  }
+  
   keyPressHandle1(letter: string): void {
    // letter.letter=letter;
   }
@@ -257,5 +280,9 @@ export class GameService {
       
       localStorage.setItem('game-data', JSON.stringify(currentSettings));
     }
+  }
+
+  setFocussedContinent(puzzleCity: PuzzleCity) {
+    this.currentPuzzleCity.next(puzzleCity);
   }
 }

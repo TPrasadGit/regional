@@ -1,17 +1,15 @@
 <div class="keyboard">
+  <input type="text" [maxLength]="currentPuzzleCity.hint.length"  [(ngModel)]="currentCity" [hidden]="hideInputBox"/>
   <ul *ngFor="let row of rows">
     <li *ngFor="let letter of row" class="keyboard-letter">
-      <button
-        (click)="letterClickHandler(letter)"
-        [ngClass]="{
+      <button (click)="letterClickHandler(letter, $event)" [ngClass]="{
           correct: correctLetters.includes(letter),
           wrongPos:
             wrongPosLetters.includes(letter) &&
             !correctLetters.includes(letter),
           notCorrect: falseLetters.includes(letter),
-          big: letter === 'Enter' || letter === 'Del'
-        }"
-      >
+          big: letter === 'Enter' || letter === 'Backspace'
+        }">
         {{ letter | uppercase }}
       </button>
     </li>
